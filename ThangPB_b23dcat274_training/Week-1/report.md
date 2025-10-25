@@ -60,19 +60,31 @@
 
 ### 2.2. Thực hành: làm việc với repo
 - Clone repo đã tạo sẵn trên github về, dùng lệnh `git clone`
+
     <img src="./images/a10.png" alt="" width="1500" height="300">
+
 - Tạo file index.html và xem trạng thái với lệnh `git status`, sẽ thấy nó là **untracked**
+
     <img src="./images/a11.png" alt="" width="1000" height="300">
+
 - Đưa file vào stagong với lệnh `git add`, Kiểm tra lại trạng thái sẽ thấy nó là **staged**
+
     <img src="./images/a12.png" alt="" width="1200" height="300">
+
 - Commit thay đổi với lệnh `git commit`
+
     <img src="./images/a13.png" alt="" width="1200" height="300">
+
 - Tiếp tục sửa file index.html và sửa file README.md, sau đó xem trạng thái file và xem sự thay đổi nội dung
+
     <img src="./images/a14.png" alt="" width="800" height="300">
     <img src="./images/a15.png" alt="" width="1000" height="400">
+
 - add và bổ sung commit thứ hai
 - Kiểm tra lịch sử với `git log`
+
     <img src="./images/a16.png" alt="" width="1000" height="400">
+
 - push code lên remote repo
 
 ## Phần 3: Làm việc với lịch sử và phiên bản
@@ -96,11 +108,17 @@
 
 ### 3.2. Thực hành: làm việc với lịch sử và phiên bản
 - Giả sử có push code lỗi lên repo
+
     <img src="./images/a17.png" alt="" width="1000" height="400">
+
 - dùng `git blame` và `git show` để tìm xem ai push code lỗi và xem nội dung bị sửa sai
+
     <img src="./images/a18.png" alt="" width="1000" height="400">
+
 - Sửa lỗi và undo, trong case này code đã push lên remote repo nên sẽ dùng `git revert`: tạo commit mới đảo ngược commit cũ
+
     <img src="./images/a19.png" alt="" width="1000" height="400">
+
 - Thiết lập `.gitignore` và test thử
     - Tạo file `.gitignore`
     - Thêm nội dung:
@@ -152,23 +170,34 @@
     - Tạo nhánh develop từ nhánh main
     - Tạo thêm 1 vài file
     - push nhánh develop lên repo github
+
     <img src="./images/a21.png" alt="" width="800" height="450">
     <img src="./images/a22.png" alt="" width="800" height="450">
+
     - pull request từ nhánh develop vào main
+
     <img src="./images/a23.png" alt="" width="800" height="450">
+
 - Giả lập trường hợp DevA và DevB cùng sửa 1 file. Nhưng DevB pull request trước, sau đó DevA mới pull request và bị conflict
     - Tạo 2 thư mục DevA và DevB, clone repo về 2 thư mục này
     - tạo 2 nhánh và cùng sửa 1 file trên đó
     - DevB sẽ push lên và pull request trước -> không bị conflict
+
     <img src="./images/a24.png" alt="" width="800" height="450">
     <img src="./images/a25.png" alt="" width="800" height="450">
+
     - Sau đó DevA sẽ push lên và pull request -> bị conflict
+
     <img src="./images/a26.png" alt="" width="800" height="450">
     <img src="./images/a27.png" alt="" width="800" height="450">
+
 - Xứ lý conflict: có thể xử lý trên GUI hoặc pull về local để xử lý rồi merge lại
     - 2 ông dev phải thảo luận với nhau để chốt phuong án đúng
+
     <img src="./images/a28.png" alt="" width="800" height="450">
-    - sau đó ấn commit merge, nó sẽ tạo ra thêm 1 commit 
+
+    - sau đó ấn commit merge, nó sẽ tạo ra thêm 1 commit
+
     <img src="./images/a29.png" alt="" width="800" height="450">
 
 ## Phần 5: Remote repository
@@ -230,12 +259,17 @@
         - thêm file
         - push lên repo và pull request vào nhánh main
         - Đánh tag v1.1
+
         <img src="./images/a30.png" alt="" width="800" height="450">
+
     - Phát sinh lỗi sau khi release v1.1, Rollback về v1.0
         - Người dùng báo lại phiên bản này bị lỗi
         - Kiểm tra lịch sử trước khi rollback
+
         <img src="./images/a31.png" alt="" width="800" height="450">
+
         - Sau khi rollback về v1.0
+
         <img src="./images/a32.png" alt="" width="800" height="450">
 
 - Khi nào thì cần thực hiện việc fetch, pull?
@@ -247,4 +281,3 @@
         - Trước khi bắt đầu commit mới, bảo đảm đang dựa trên code mới nhất
         - Trước khi tạo Pull Request hoặc push code lên server
         - Khi Lead yêu cầu cập nhật hotfix khẩn cấp từ remote vào local
-
