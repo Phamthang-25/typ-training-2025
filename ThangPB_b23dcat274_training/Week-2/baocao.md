@@ -85,7 +85,7 @@
     - `cd`: Di chuyển vào thư mục
     - `clear`: Xóa màn hình Terminal, giúp dễ nhìn hơn
     - `history`: Hiển thị lịch sử các lệnh đã gõ
-- Các hím tắt thông dụng:
+- Các phím tắt thông dụng:
     - `Tab`: Tự động gợi ý hoặc hoàn thành tên file/thư mục
     - `Ctrl + C`: Dừng/hủy tiến trình đang chạy trong terminal
     - `Ctrl + D`: Thoát khỏi shell hoặc kết thúc input (tương đương lệnh `exit`)
@@ -211,12 +211,12 @@
 - Lệnh `chgrp`: thay đổi nhóm sở hữu
 - Quyền root và an toàn
     - Root là tài khoản quản trị cao nhất trong linux
-    - Root có thể làm bất kỳ điều gì, kể cả xóa toàn boo hệ thống
+    - Root có thể làm bất kỳ điều gì, kể cả xóa toàn bộ hệ thống
     - Tại sao không nên chạy mọi thứ bằng root?
         - Rất dễ xóa nhầm `/`hoặc `/etc` -> hệ thống hỏng hoàn toàn
         - Malware hoặc script độc hại có thể chiếm toàn quyền
         - Mất tính bảo mật và tách biệt người dùng
-- Sự khác biệt giữa `sudu` và `su`
+- Sự khác biệt giữa `suou` và `su`
     - `su`: Chuyển hẳn sang user khác
     - `sudo`: Chạy một lệnh duy nhất với quyền root
 - **Thực hành**:
@@ -228,7 +228,7 @@
         <img src="./images_2/a10.png" alt="" width="1000" height="400">
     - Thay đỏi own và group của file -> check
         <img src="./images_2/a11.png" alt="" width="1000" height="70">
-    - Phân quyền cho thư mục chia sẻ: mô phỏng trường hợp 2 user cùng làm việc trên cùng 1 thư mịc dự án
+    - Phân quyền cho thư mục chia sẻ: mô phỏng trường hợp 2 user cùng làm việc trên cùng 1 thư mục dự án
         - Thêm user2
         - Tạo nhóm và thêm người dùng vào nhóm
             <img src="./images_2/a12.png" alt="" width="1000" height="150">
@@ -334,7 +334,7 @@
     - Cấu hình tường lửa cơ bản:
         - Bật firewall: `sudo ufw enable`
         - Ví dụ: Cho phép SSH (`sudo ufw allow 22`), cho phép web (`sudo ufw allow 80`, `sudo ufw allow 443`), ...
-        - Xem trạng thái firewall: `suod ufw status`
+        - Xem trạng thái firewall: `sudo ufw status`
         - Dùng **iptables**:
             - Xem tất cả rule firewall hiện có: `sudo iptables -L -n -v`
 - **Thực hành**
@@ -420,8 +420,8 @@
         <img src="./images_2/a25.png" alt="" width="1000" height="30">
         <img src="./images_2/a27.png" alt="" width="1000" height="150">
         <img src="./images_2/a26.png" alt="" width="1000" height="350">
-## Phần 9: Thực hành 
-- Cấu hình bảo mật SSH
+## Phần 9: Thực hành mở rộng
+- Cấu hình bảo mật SH
     - <img src="./images_2/a35.png" alt="" width="1000" height="400">
     - Dổi port ssh sang 2222
         - `sudo nano /etc/ssh/sshd_config`
