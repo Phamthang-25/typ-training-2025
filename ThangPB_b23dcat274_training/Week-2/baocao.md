@@ -422,7 +422,7 @@
         <img src="./images_2/a26.png" alt="" width="1000" height="350">
 ## Phần 9: Thực hành 
 - Cấu hình bảo mật SSH
-    - a35
+    - <img src="./images_2/a35.png" alt="" width="1000" height="400">
     - Dổi port ssh sang 2222
         - `sudo nano /etc/ssh/sshd_config`
         <img src="./images_2/a36.png" alt="" width="1000" height="350">
