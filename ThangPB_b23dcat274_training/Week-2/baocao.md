@@ -313,11 +313,11 @@
 ## Phần 7: Làm việc với mạng (Networking)
 - Lệnh kiểm tra mạng:
     - Lệnh `ping`: kiểm tra kết nối mạng hoặc máy chủ có phẩn hồi ko
-        - a28
+        <img src="./images_2/a28.png" alt="" width="1000" height="350">
     - Lệnh `ifconfig` hoặc `ip addr show`: hiển thị thông tin địa chỉ IP, card mạng, MAC, ...
-        - a29
+        <img src="./images_2/a29.png" alt="" width="1000" height="300">
     - Lệnh `netstast` hoặc `ss`: Kết nối mạng đang mở và cổng đang lắng nghe
-        - a30
+        <img src="./images_2/a30.png" alt="" width="1000" height="250">
         - các option:
             - t : TCP
             - u : UDP
