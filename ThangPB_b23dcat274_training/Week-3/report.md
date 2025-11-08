@@ -234,4 +234,24 @@
     <img src="./images_3/a23.png" alt="" width="850" height="400">
 
 ### 3.2. Triển khai bằng Container
+- Dockerfile cho frontend
 
+    <img src="./images_3/a24.png" alt="" width="300" height="300">
+
+- Dcokerfile cho backemd
+
+    <img src="./images_3/a25.png" alt="" width="350" height="300">
+
+- Docker-compose
+
+    <img src="./images_3/a26.png" alt="" width="400" height="600">
+
+    <img src="./images_3/a27.png" alt="" width="400" height="500">
+
+- Chạy lệnh: `sudo docker-compose up -d --build`
+    
+    <img src="./images_3/a28.png" alt="" width="900" height="100">
+
+- Test truy cập:
+
+    <img src="./images_3/a29.png" alt="" width="850" height="400">
