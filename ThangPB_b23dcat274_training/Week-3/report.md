@@ -203,7 +203,7 @@
 - Cấu trúc thư mục:
     - Do đây cap lại lúc đã làm xong nên sẽ có cả file build của phần 3.1 và dockerfile của phần 3.2
     
-    <img src="./images_3/a30.png" alt="" width="200" height="600">
+    <img src="./images_3/A30.png" alt="" width="200" height="600">
 
 
 ### 3.1. Triển khai trên VM
