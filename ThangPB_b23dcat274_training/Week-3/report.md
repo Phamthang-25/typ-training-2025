@@ -201,10 +201,8 @@
 
 ## Phần 3: Mini-lab
 - Cấu trúc thư mục:
-    - Do đây cap lại lúc đã làm xong nên sẽ có cả file build của phần 3.1 và dockerfile của phần 3.2
     
     <img src="./images_3/A30.png" alt="" width="200" height="600">
-
 
 ### 3.1. Triển khai trên VM
 - Cài đặt nodejs:
@@ -227,7 +225,9 @@
 
     <img src="./images_3/a18.png" alt="" width="850" height="60">
 
-- Run frontend: port 3000
+- Build và Run frontend: port 3000
+    - `npm install`
+    - `npm start`
 
     <img src="./images_3/a19.png" alt="" width="850" height="200">
 
@@ -246,7 +246,7 @@
 
 - Dcokerfile cho backemd
 
-    <img src="./images_3/a25.png" alt="" width="350" height="300">
+    <img src="./images_3/a25.png" alt="" width="300" height="300">
 
 - Docker-compose
 
@@ -255,6 +255,7 @@
     <img src="./images_3/a27.png" alt="" width="400" height="500">
 
 - Chạy lệnh: `sudo docker-compose up -d --build`
+    - Check xem các container đang chạy: `sudo docker ps`
     
     <img src="./images_3/a28.png" alt="" width="900" height="100">
 
