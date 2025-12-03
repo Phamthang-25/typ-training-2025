@@ -21,24 +21,24 @@
         - Định nghĩa các stages:
         ```yml
         stages:
-            - build
-            - test
-            - deploy
-            - ...
+          - build
+          - test
+          - deploy
+          - ...
         ```
     - **Jobs**: Là các tác vụ cụ thể sẽ được thực hiện
         - Các Jobs trong cùng một Stage được thực thi song song để tăng tốc độ pipeline
         - Khai báo cái Jobs:
         ```yml
         stages:
-            - build
-            - ...
+          - build
+          - ...
 
         Job_name: 
-            stage: build  
-            script:        
-                - echo "Bắt đầu biên dịch..."
-                - mvn clean package
+          stage: build  
+          script:        
+            - echo "Bắt đầu biên dịch..."
+            - mvn clean package
         ```
     - Một vài từ khóa quan trọng:
         - **stage**: Chỉ định Job thuộc về Stage nào đã được định nghĩa
@@ -56,25 +56,25 @@
     - Thử với vài stage đơn giản:
     ```yml
     stages:
-        - build
-        - test
+      - build
+      - test
 
     build:
-        stage: build
-        script:
-            - whoami
-            - pwd
-            - echo "hello CI/CD"
-        tags:
-            - lab-runner
+      stage: build
+      script:
+        - whoami
+        - pwd
+        - echo "hello CI/CD"
+      tags:
+             lab-runner
 
     test:
-        stage: test
-        script:
-            - echo "start test ...."
-            - echo "final test ..."
-        tags:
-            - lab-runner
+      stage: test
+      script:
+        - echo "start test ...."
+        - echo "final test ..."
+      tags:
+        - lab-runner
     ```
     - Đã chạy lần đầu thành công:
 
@@ -87,16 +87,116 @@
     <img src="./images_4/a5.png" alt="" width="900" height="350">
 
 - **Sử dụng variable để quản lý thông tin (username, password, ...)**
+    - Lưu và quản lý các giá trị cấu hình để không phải hard-code trong pipeline, giúp pipeline dễ sửa, dễ tái sử dụng và bảo mật thông tin nhạy cảm
+    - VD: dùng biến **DOCKERHUB_USER** (lưu username của Registry), **DOCKERHUB_PASSWORD** (lưu token của Registry)
+
+    <img src="./images_4/a6.png" alt="" width="900" height="200">
 
 ### 2. Thực hành triên khai với Container
-- Tạo luông tự động khi push code lên theo tag
-- Thực hiện tự động build Docker image
-- Thêm stage scan images (Trivy), để kiểm soát chất lượng image
-- Push image lên registry sau khi pass stage scan
-- Thiếp lập môi trường Staging để deploy
+- **Tạo luông tự động khi push code lên theo tag**
+    - Thêm rule cho mỗi stage
+    ```yml
+    rules:
+      - if: $CI_COMMIT_TAG
+    ```
+- **Thiết lập tự động Build và Push docker image lên registry**
+    - File `.gitlab-ci.yml`, như sau:
+    ```yml
+    stages:
+      - build
+      - push
+
+    variables:
+      TAG: $CI_COMMIT_TAG
+      IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
+      IMAGE_LATEST: $CI_REGISTRY_IMAGE:latest
+
+    # Template cho viec login Docker Hub 
+    .docker_login: &docker_login
+      before_script:
+        # Login vao Docker Hub
+        - echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USER" --password-stdin
+
+    # STAGE 1: BUILD
+    build_backend:
+      stage: build
+      tags:
+        - lab-runner
+      image: docker:24.0.5
+      services:
+        - docker:24.0.5-dind
+      script:
+        - echo "Building Backend Image..."
+        - docker build -t backend-image:$CI_COMMIT_SHA ./quiz-backend
+        - mkdir -p images
+        - docker save backend-image:$CI_COMMIT_SHA -o images/backend.tar
+      artifacts:
+        paths:
+          - images/
+        expire_in: 1 hour
+      rules:
+        - if: $CI_COMMIT_TAG
+
+    build_frontend:
+      stage: build
+      tags:
+        - lab-runner
+      image: docker:24.0.5
+      services:
+        - docker:24.0.5-dind
+      script:
+        - echo "Building Frontend Image..."
+        - docker build -t frontend-image:$CI_COMMIT_SHA ./quiz-frontend
+        - mkdir -p images
+        - docker save frontend-image:$CI_COMMIT_SHA -o images/frontend.tar
+      artifacts:
+        paths:
+          - images/
+        expire_in: 1 hour
+      rules:
+        - if: $CI_COMMIT_TAG
+
+    # STAGE 2: PUSH (Day len Registry)
+    push_images:
+      stage: push
+      tags:
+        - lab-runner
+      image: docker:24.0.5
+      services:
+        - docker:24.0.5-dind
+      <<: *docker_login
+      dependencies:
+        - build_backend
+        - build_frontend
+      script:
+        - echo "Pushing Images to Registry..."
+        # Load image tu artifact
+        - docker load -i images/backend.tar
+        - docker load -i images/frontend.tar
+        # Tag va Push
+        - docker tag backend-image:$CI_COMMIT_SHA thang05/myrepo:backend-$TAG
+        - docker push thang05/myrepo:backend-$TAG
+        - docker tag backend-image:$CI_COMMIT_SHA thang05/myrepo:backend
+        - docker push thang05/myrepo:backend
+        - docker tag frontend-image:$CI_COMMIT_SHA thang05/myrepo:frontend-$TAG
+        - docker push thang05/myrepo:frontend-$TAG
+        - docker tag frontend-image:$CI_COMMIT_SHA thang05/myrepo:frontend
+        - docker push thang05/myrepo:frontend
+      rules:
+        - if: $CI_COMMIT_TAG
+    ```
+    - Chạy thành công pipeline Build và Push docker image
+
+    <img src="./images_4/a7.png" alt="" width="900" height="300">
+
+    - Kiểm tra repo trên Dockerhub, đã thấy có images được push lên theo tag: v1.0.8
+
+    <img src="./images_4/a8.png" alt="" width="600" height="200">
+
+- **Thiếp lập môi trường Staging để deploy**
+- **Thiết lập deploy thủ công lên Production**
 
 ### 3. Hay ho hơn một chút!!!
-- Thiết lập deploy thủ công lên Production
 - Thiết lập branch rule
     - develop -> deploy lên Staging
     - main -> deploy lên Production
