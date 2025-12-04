@@ -122,9 +122,6 @@
       stage: build
       tags:
         - lab-runner
-      image: docker:24.0.5
-      services:
-        - docker:24.0.5-dind
       script:
         - echo "Building Backend Image..."
         - docker build -t backend-image:$CI_COMMIT_SHA ./quiz-backend
@@ -141,9 +138,6 @@
       stage: build
       tags:
         - lab-runner
-      image: docker:24.0.5
-      services:
-        - docker:24.0.5-dind
       script:
         - echo "Building Frontend Image..."
         - docker build -t frontend-image:$CI_COMMIT_SHA ./quiz-frontend
@@ -156,14 +150,11 @@
       rules:
         - if: $CI_COMMIT_TAG
 
-    # STAGE 2: PUSH (Day len Registry)
+    # STAGE 2: PUSH
     push_images:
       stage: push
       tags:
         - lab-runner
-      image: docker:24.0.5
-      services:
-        - docker:24.0.5-dind
       <<: *docker_login
       dependencies:
         - build_backend
@@ -194,7 +185,53 @@
     <img src="./images_4/a8.png" alt="" width="600" height="200">
 
 - **Thiếp lập môi trường Staging để deploy**
+  - Dùng 1 con EC2 để chạy app
+  - Cài docker và docker-compose cho instance đó
+  - Tạo thêm 1 số variable: **SERVER_IP** (lưu public IP của instance), **SERVER_USER** (lưu user đang sử dụng trên instance), **SSH_PRIVATE_KEY** (lưu private key để ssh vào instance)
+  - Thêm đoạn mã sau vào file `.gitlab-ci.yml`
+  ```yml
+  deploy_staging:
+    stage: deploy
+    tags: 
+      - lab-runner
+    before_script:
+      - mkdir -p ~/.ssh
+      - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+      - chmod 600 ~/.ssh/id_rsa
+      - echo -e "Host *\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
+
+    script:
+      - scp -i ~/.ssh/id_rsa docker-compose.yml $SERVER_USER@$SERVER_IP:/home/ubuntu/project/docker-compose.yml
+      - |
+        ssh -i ~/.ssh/id_rsa $SERVER_USER@$SERVER_IP "
+          cd /home/ubuntu/project
+
+          echo 'TAG=$TAG' > .env
+          export TAG=$TAG
+
+          docker-compose pull
+          docker-compose down
+          docker-compose up -d
+        "
+    rules:
+      - if: $CI_COMMIT_TAG
+  ``` 
+  - Đã chạy thành công pipeline
+
+  <img src="./images_4/a9.png" alt="" width="700" height="250">
+
+  - Test truy cập web thông qua public IP của instance
+
+  <img src="./images_4/a10.png" alt="" width="700" height="250">
+
 - **Thiết lập deploy thủ công lên Production**
+  - Tương tự như setup cho Staging, chỉ cần thêm đoạn sau vào cuối stage:
+  ```yml
+  when: manual
+  environment: 
+    name: production
+  ```
+  - Phải thực hiện thao tác nhấn để chạy job này
 
 ### 3. Hay ho hơn một chút!!!
 - Thiết lập branch rule
