@@ -66,7 +66,7 @@
         - pwd
         - echo "hello CI/CD"
       tags:
-             lab-runner
+        - lab-runner
 
     test:
       stage: test
@@ -234,8 +234,32 @@
   - Phải thực hiện thao tác nhấn để chạy job này
 
 ### 3. Hay ho hơn một chút!!!
-- Thiết lập branch rule
-    - develop -> deploy lên Staging
+- **Thiết lập branch rule**
+  - Quy tắc phân nhánh (branch rules) là nền tảng để đảm bảo chất lượng code và quy trình triển khai nhất quán
+    - develop => deploy lên Staging
+      - Cần bảo vệ branch `develop`. Bắt buộc review code và kiểm tra CI/CD thành công trước khi cho phép merge
     - main -> deploy lên Production
-- Tìm hiểu một chút về Scan bảo mật trong CI/CD pipeline
+      - Branch `main` phải được bảo vệ nghiêm ngặt hơn. Có thể yêu cầu nhiều người review, kiểm tra CI/CD thành công, và hạn chế người được phép merge (chỉ có trưởng nhóm hoặc DevOps)
+  - Thực hiện thiêt lập và test
+
+- **Tìm hiểu một chút về bảo mật trong CI/CD pipeline**
+  - **SAST** (Static Application Security Testing - Quét Tĩnh):
+    - Thực hiện ngay sau khi code được commit/trước khi build.
+    - Phân tích mã nguồn => tìm kiếm các lỗ hổng phổ biến (SQLi, XSS, ...) và tuân thủ các chuẩn mã 
+    - Công cụ: SonaQube, Checkmarx
+  - **SCA** (Software Composition Analysis - Phân tích Thành phần Phần mềm):
+    - Thực hiện trong quá trình CI, thường chạy cùng SAST hoặc khi build
+    - Quét các thư viện bên thứ ba (dependencies) => ra các lỗ hổng đã biết (CVEs) và các vấn đề về giấy phép (licensing issues)
+    - Công cụ: Dependabot, Snyk, Nexus Lifecycle
+  - **Scan image/container**:
+    - Sau khi build image và trước khi đẩy lên Registry
+    - Quét các lớp (layers) của image để tìm lỗ hổng trong hệ điều hành cơ sở và các gói phần mềm cài đặt bên trong
+    - Công cụ: Clair, Trivy, công cụ tích hợp sẵn của Docker Hub/Registry
+  - **DAST** (Dynamic Application Security Testing - Quét Động):
+    - Sau khi triển khai lên môi trường Thử nghiệm/Staging
+    - Tấn công ứng dụng từ bên ngoài khi nó đang chạy, mô phỏng hành vi của hacker để tìm lỗ hổng trong logic và cấu hình
+    - Công cụ: OWASP ZAP, Acunetix
 - Thiết lập thông báo và xuát báo cáo về cho chủ nhân
+
+### 4. Demo
+- ...
