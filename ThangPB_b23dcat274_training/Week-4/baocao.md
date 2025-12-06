@@ -240,7 +240,6 @@
       - Cần bảo vệ branch `develop`. Bắt buộc review code và kiểm tra CI/CD thành công trước khi cho phép merge
     - main -> deploy lên Production
       - Branch `main` phải được bảo vệ nghiêm ngặt hơn. Có thể yêu cầu nhiều người review, kiểm tra CI/CD thành công, và hạn chế người được phép merge (chỉ có trưởng nhóm hoặc DevOps)
-  - Thực hiện thiêt lập và test
 
 - **Tìm hiểu một chút về bảo mật trong CI/CD pipeline**
   - **SAST** (Static Application Security Testing - Quét Tĩnh):
@@ -259,7 +258,7 @@
     - Sau khi triển khai lên môi trường Thử nghiệm/Staging
     - Tấn công ứng dụng từ bên ngoài khi nó đang chạy, mô phỏng hành vi của hacker để tìm lỗ hổng trong logic và cấu hình
     - Công cụ: OWASP ZAP, Acunetix
-- Thiết lập thông báo và xuát báo cáo về cho chủ nhân
 
 ### 4. Demo
-- ...
+- Develop thực hiện sửa UI và test trên môi trường Staging
+- Release version mới và deploy lên Production
