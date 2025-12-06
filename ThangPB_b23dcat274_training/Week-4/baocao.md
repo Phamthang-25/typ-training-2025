@@ -1,4 +1,5 @@
 ## Báo cáo CI/CD với GitLab
+### [Xem repo Gitlab tại đây !!!](https://gitlab.com/gm.phamthangg-group/lab-cicd-typ)
 
 ### 1. Mở đầu về CI/CD
 - **Khái quát về CI/CD**
