@@ -200,10 +200,6 @@
         - **volumes**: định nghĩa các persistent volume cho service
 
 ## Phần 3: Mini-lab
-- Cấu trúc thư mục:
-    
-    <img src="./images_3/A30.png" alt="" width="200" height="600">
-
 ### 3.1. Triển khai trên VM
 - Cài đặt nodejs:
 
@@ -241,19 +237,90 @@
 
 ### 3.2. Triển khai bằng Container
 - Dockerfile cho frontend
+    ```yml
+    FROM node:18-alpine
 
-    <img src="./images_3/a24.png" alt="" width="300" height="300">
+    WORKDIR /app
 
+    COPY package*.json ./
+
+    RUN npm install
+
+    COPY . .
+
+    EXPOSE 3000
+
+    CMD ["npm", "start"]
+    ```
 - Dcokerfile cho backemd
+    ```yml
+    FROM node:18-alpine
 
-    <img src="./images_3/a25.png" alt="" width="300" height="300">
+    WORKDIR /app
 
+    COPY package*.json ./
+
+    RUN npm install
+
+    COPY . .
+
+    EXPOSE 3001
+
+    CMD ["node", "index.js"]
+    ```
 - Docker-compose
+    ```yml
+    version: "3.9"
 
-    <img src="./images_3/a26.png" alt="" width="400" height="600">
+    services:
+    db:
+        image: mysql:8.0
+        container_name: mysql_container
+        environment:
+        MYSQL_ROOT_PASSWORD: pass123
+        MYSQL_DATABASE: appdb
+        MYSQL_USER: appuser
+        MYSQL_PASSWORD: pass123
+        volumes:
+        - db_data:/var/lib/mysql
+        networks:
+        - appnet
 
-    <img src="./images_3/a27.png" alt="" width="400" height="500">
+    backend:
+        build: ./backend
+        container_name: backend_container
+        environment:
+        DB_HOST: db
+        DB_USER: appuser
+        DB_PASSWORD: pass123
+        DB_NAME: appdb
+        ports:
+        - "3001:3001"
+        depends_on:
+        - db
+        networks:
+        - appnet
 
+    frontend:
+        build: ./frontend
+        container_name: frontend_container
+        ports:
+        - "3000:3000"
+        environment:
+        - CHOKIDAR_USEPOLLING=true
+        - REACT_APP_BACKEND_URL=http://backend:3001
+        depends_on:
+        - backend
+        networks:
+        - appnet
+
+    networks:
+    appnet:
+        driver: bridge
+
+    volumes:
+    db_data:
+    ```
 - Chạy lệnh: `sudo docker-compose up -d --build`
     - Check xem các container đang chạy: `sudo docker ps`
     
