@@ -234,7 +234,7 @@
   ```
   - Phải thực hiện thao tác nhấn để chạy job này
 
-### 3. Hay ho hơn một chút!!!
+### 3. Tìm hiểu thêm
 - **Thiết lập branch rule**
   - Quy tắc phân nhánh (branch rules) là nền tảng để đảm bảo chất lượng code và quy trình triển khai nhất quán
     - develop => deploy lên Staging

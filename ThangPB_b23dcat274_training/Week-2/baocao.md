@@ -421,7 +421,7 @@
         <img src="./images_2/a27.png" alt="" width="1000" height="150">
         <img src="./images_2/a26.png" alt="" width="1000" height="350">
 ## Phần 9: Thực hành mở rộng
-- Cấu hình bảo mật SH
+- Cấu hình bảo mật SSH:
     - <img src="./images_2/a35.png" alt="" width="1000" height="400">
     - Dổi port ssh sang 2222
         - `sudo nano /etc/ssh/sshd_config`
