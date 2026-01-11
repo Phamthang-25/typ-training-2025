@@ -112,6 +112,8 @@
     │   │   └── tasks/
     │   │       └── main.yml    # Setup môi trường
     │   ├── db/
+    |   |   |── files/
+    │   |   |   └── init.sql
     │   │   └── tasks/
     │   │       └── main.yml    # Triển khai Database
     │   └── fe/
