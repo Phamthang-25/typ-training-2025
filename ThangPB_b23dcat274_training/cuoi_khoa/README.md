@@ -1,7 +1,7 @@
-## Bài tập cuối khóa Cloud
+# Bài tập cuối khóa Cloud
 ---
-### Phần 1: Triển khai cụm K8s
-#### Chuẩn bị
+## Phần 1: Triển khai cụm K8s
+### Chuẩn bị
 - Hai VM với cấu hình:
     - **CPU**: 2 core
     - **RAM**: 3GB
@@ -10,7 +10,7 @@
 
 <img src="./image/a1.png" alt="" width="900" height="500">
 
-#### Cấu hình mạng cho VM
+### Cấu hình mạng cho VM
 - Đại chỉ IP tĩnh cho 2 máy:
     - **Master**: 192.168.1.120
     - **Worker**: 192.168.1.121
@@ -22,7 +22,7 @@
 
 <img src="./image/a3.png" alt="" width="800" height="400">
 
-#### Cài đặt K8s thông qua công cụ kubeadm
+### Cài đặt K8s thông qua công cụ kubeadm
 - Tắt swap: kubelet mặc định không chạy khi swap bật, vì ảnh hưởng quản lý bộ nhớ
     ```bash
     sudo swapoff -a
@@ -74,7 +74,7 @@
     sudo apt install -y kubelet kubeadm kubectl
     sudo apt-mark hold kubelet kubeadm kubectl
     ```
-#### Dựng cụm với 1 master - 1 worker
+### Dựng cụm với 1 master - 1 worker
 - Khởi tạo control-plane (trên node master): `sudo kubeadm init`
 - Cấu hình kubeconfig cho user (trên node master)
     ```bash
@@ -88,7 +88,7 @@
     kubeadm join 192.168.1.120:6443 --token m9wqak.afb0zw2bfjqium8x \
         --discovery-token-ca-cert-hash sha256:927274508dd33bac2a7d82ec4feae8fa84798ed7477e68d22b462a6c4b0ea2c1
     ```
-#### Kiểm tra hệ thống
+### Kiểm tra hệ thống
 - `kubectl get nodes -o wide`
 
 <img src="./image/a4.png" alt="" width="1000" height="80">
@@ -98,13 +98,66 @@
 <img src="./image/a5.png" alt="" width="1000" height="350">
 
 ---
-### Phần 2: CI/CD
+## Phần 2: K8s-HelmChart
+### App được lựa chọn
+- hehe ...
+### Yêu cầu 1
+- **Mục tiêu**: cài đặt được Jenkins và ArgoCD, expose được qua NodePord
+#### Cài đặt ArgoCD
+- Install ArgoCD:
+    ```bash
+    kubectl create namespace argocd
+    kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+    ```
+- File Manifest triển khai dịch vụ ArgoCD qua NodePort
+    ```yml
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: argocd-server-nodeport
+      namespace: argocd
+    spec:
+      type: NodePort
+      ports:
+        - port: 80
+          targetPort: 8080
+          nodePort: 30000
+      selector:
+        app.kubernetes.io/name: argocd-server
+    ```
+- Truy cập AgroCD:
+    - NodeIP: 192.168.1.121
+    - NodePort của AgroCD: 30000
+- Giao diện ArgoCD
+
+<img src="./image/a6.png" alt="" width="1000" height="500">
+
+#### Cài đặt Jenkins
+- Install Jenkins:
+    ```bash
+    kubectl create namespace jenkins
+    nano jenkins.yaml
+    kubectl apply -f jenkins.yaml
+    ```
+- File Manifest triển khai dịch vụ Jenkins: [File cài đăth jenkins](./manifest/jenkins.yaml)
+- Truy cập jenkins:
+    - NodeIP: 192.168.1.121
+    - NodePort của AgroCD: 300000
+- Giao diện jenkins
+
+<img src="./image/a7.png" alt="" width="1000" height="500">
+
+### Yêu cầu 2
+- ...
 
 ---
-### Phần 3: Monitoring
+## Phần 3: CI/CD
 
 ---
-### Phần 4: Logging
+## Phần 4: Monitoring
 
 ---
-### Phần 5: Security
+## Phần 5: Logging
+
+---
+## Phần 6: Security
