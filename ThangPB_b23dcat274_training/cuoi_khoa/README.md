@@ -102,7 +102,7 @@
 ### App được lựa chọn
 - hehe ...
 ### Yêu cầu 1
-- **Mục tiêu**: cài đặt được Jenkins và ArgoCD, expose được qua NodePord
+- **Mục tiêu**: cài đặt được Jenkins và ArgoCD, expose được qua NodePor
 #### Cài đặt ArgoCD
 - Install ArgoCD:
     ```bash
@@ -125,7 +125,7 @@
       selector:
         app.kubernetes.io/name: argocd-server
     ```
-- Truy cập AgroCD:
+- Truy cập ArgoCD:
     - NodeIP: 192.168.1.121
     - NodePort của AgroCD: 30000
 - Giao diện ArgoCD
@@ -142,7 +142,7 @@
 - File Manifest triển khai dịch vụ Jenkins: [File cài đăth jenkins](./manifest/jenkins.yaml)
 - Truy cập jenkins:
     - NodeIP: 192.168.1.121
-    - NodePort của AgroCD: 300000
+    - NodePort của AgroCD: 30999
 - Giao diện jenkins
 
 <img src="./image/a7.png" alt="" width="1000" height="500">
