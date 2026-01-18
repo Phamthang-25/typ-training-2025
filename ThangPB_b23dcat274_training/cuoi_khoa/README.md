@@ -308,11 +308,11 @@ spec:
         - values.yaml
 ```
 - **Ảnh chụp màn hình ArgoCD**
-    - Tổng quan các Application
+- Tổng quan các Application
 
 <img src="./image/a9.png" alt="" width="1000" height="500">
 
-    - Backend application
+- Backend application
 
 <img src="./image/a10.png" alt="" width="1000" height="500">
 
@@ -320,13 +320,13 @@ spec:
 
 <img src="./image/a12.png" alt="" width="1000" height="500">
 
-    - frontend application
+- frontend application
 
 <img src="./image/a13.png" alt="" width="1000" height="500">
 
 <img src="./image/a14.png" alt="" width="1000" height="500">
 
-    - Database application
+- Database application
 
 <img src="./image/a15.png" alt="" width="1000" height="500">
 
@@ -334,11 +334,11 @@ spec:
 
 <img src="./image/a18.png" alt="" width="1000" height="80">
 
-    - Hình ảnh truy cập frontend
+- Hình ảnh truy cập frontend
 
 <img src="./image/a16.png" alt="" width="1000" height="500">
 
-    - Truy cập vào API
+- Truy cập vào API
 
 <img src="./image/a17.png" alt="" width="1000" height="500">
 
