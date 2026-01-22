@@ -10,6 +10,7 @@
 - [CI/CD](3.CI-CD.md)
 
 ## Phần 4: Monitoring
+- [Monitoring](4.Monitor.md)
 
 ## Phần 5: Logging
 
