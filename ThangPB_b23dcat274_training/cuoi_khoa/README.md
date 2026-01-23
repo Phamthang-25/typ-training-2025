@@ -13,5 +13,6 @@
 - [Monitoring](4.Monitor.md)
 
 ## Phần 5: Logging
+- [Logging](5.Logging.md)
 
 ## Phần 6: Security
