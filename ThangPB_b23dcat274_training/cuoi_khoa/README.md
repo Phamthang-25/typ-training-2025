@@ -16,3 +16,4 @@
 - [Logging](5.Logging.md)
 
 ## Phần 6: Security
+- [Security](6.Security.md)
